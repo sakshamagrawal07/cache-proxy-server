@@ -30,4 +30,6 @@ func main() {
 		fmt.Println("No parameter passed. Use --port and --origin to start the proxy server.")
 		flag.Usage()
 	}
+
+	fmt.Println("tst")
 }
