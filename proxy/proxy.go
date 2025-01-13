@@ -6,10 +6,13 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"sync"
 
 	"github.com/redis/go-redis/v9"
 	"github.com/sakshamagrawal07/cache-proxy-server/utils"
 )
+
+var wg = sync.WaitGroup{}
 
 type ProxyObject struct {
 	Origin string
@@ -23,7 +26,12 @@ func NewProxy(origin string) *ProxyObject {
 }
 
 func (p *ProxyObject) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	wg.Add(1)
+	go forwardRequest(p, w, r)
+	wg.Wait()
+}
 
+func forwardRequest(p *ProxyObject, w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 
 	// Connect to Redis
@@ -93,4 +101,5 @@ func (p *ProxyObject) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Body", body)
 		utils.RespondWithHeaders(w, http.StatusOK, []byte(body), "Hit", CACHE_KEY)
 	}
+	wg.Done()
 }
