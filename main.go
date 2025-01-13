@@ -34,7 +34,7 @@ func main() {
 
 		log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *PORT), nil))
 	} else {
-		fmt.Println("No parameter passed. Use --port and --origin to start the proxy server.")
+		fmt.Println("No parameter passed. Use -h to see available options.")
 		flag.Usage()
 	}
 }

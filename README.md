@@ -29,5 +29,11 @@ docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:la
 go run main.go --clear-cache
 ```
 
+### To view the available commands:
+
+```bash
+go run main.go -h
+```
+
 ## Extras
 This Repo serves as a solution to [Roadmap.sh Caching Server Problem](https://roadmap.sh/projects/caching-server)
