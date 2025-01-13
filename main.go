@@ -7,17 +7,24 @@ import (
 	"net/http"
 
 	"github.com/sakshamagrawal07/cache-proxy-server/proxy"
+	"github.com/sakshamagrawal07/cache-proxy-server/utils"
 )
 
 func main() {
 
 	PORT := flag.Int("port", 0, "Define desired port for the proxy server to run.")
 	ORIGIN := flag.String("origin", "", "Define the URL of the server to which the requests will be forwarded.")
+	CLEAR_CACHE := flag.Bool("clear-cache", false, "Clear the cache.")
 
 	flag.Parse()
 
 	fmt.Println("PORT : ", *PORT)
 	fmt.Println("PORT : ", *ORIGIN)
+
+	if *CLEAR_CACHE {
+		utils.ClearCache()
+		return
+	}
 
 	if *ORIGIN != "" && *PORT != 0 {
 		proxy := proxy.NewProxy(*ORIGIN)
