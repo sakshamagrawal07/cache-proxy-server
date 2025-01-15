@@ -72,7 +72,7 @@ func forwardRequest(p *ProxyObject, w http.ResponseWriter, r *http.Request) {
 
 		// Cache the response body
 		// Store the response body in Redis
-		bodyCacheError := db.Set(ctx, CACHE_KEY, body, 0).Err()
+		bodyCacheError := db.Set(ctx, CACHE_KEY, body, 24*60*60).Err()
 		if bodyCacheError != nil {
 			fmt.Println("Error caching response body")
 			log.Fatal(bodyCacheError)
